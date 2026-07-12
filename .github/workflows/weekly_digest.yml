@@ -1,0 +1,26 @@
+name: weekly-digest
+on:
+  schedule:
+    - cron: "0 2 * * 1"         # Monday 07:30 IST
+  workflow_dispatch:
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - run: python llm/digest.py
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      - name: commit digest
+        run: |
+          git config user.name "pulse-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add data/digests/
+          git commit -m "weekly digest" || echo "no changes"
+          git push

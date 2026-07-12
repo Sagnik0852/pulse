@@ -1,0 +1,9 @@
+streamlit
+google-play-scraper
+pandas
+numpy
+scikit-learn
+plotly
+anthropic
+pyyaml
+pyarrow

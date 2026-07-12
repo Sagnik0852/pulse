@@ -1,0 +1,50 @@
+# ============================================================
+# PULSE — Customer Intelligence Platform
+# This file is the ONLY thing you change to point the platform
+# at a different company. 10 minutes to re-skin for any brand.
+# ============================================================
+
+company:
+  name: FirstClub
+  tagline: "quality-first membership commerce"
+  color: "#0F4C3A"
+  # Verified 2026-07-12: "FirstClub : Quality in Minutes" by FirstClub
+  # technology — 4.7★, ~4.8K reviews, 500K+ downloads.
+  # (com.firstclub is an unrelated ITC internal app — do not use.)
+  play_store_id: "com.firstclub.app"
+  app_store_id: null        # numeric ID from App Store URL, or null
+  app_store_name: null
+
+competitors:
+  # VERIFY each ID from the Play Store URL before trusting it.
+  - name: Zepto
+    play_store_id: "com.zeptoconsumerapp"
+  - name: Blinkit
+    play_store_id: "com.grofers.customerapp"
+  - name: BigBasket
+    play_store_id: "com.bigbasket.mobileapp"
+  - name: Swiggy Instamart
+    # Verified 2026-07-12: Instamart now has a standalone app
+    # ("Instamart: Groceries & more", 4.6★) — cleaner than keyword-
+    # filtering the main Swiggy app, so no keyword_filter needed.
+    play_store_id: "in.swiggy.android.instamart"
+
+scrape:
+  reviews_per_app: 2000
+  country: "in"
+  lang: "en"
+
+llm:
+  label_model: "claude-haiku-4-5"
+  # Sonnet 5 (June 2026): better than 4.6 and cheaper at intro pricing.
+  digest_model: "claude-sonnet-5"
+  chat_model: "claude-sonnet-5"
+  label_batch_size: 50
+
+digest:
+  recipient_persona: "founder/CEO of a quality-first quick-commerce company"
+
+paths:
+  db: "data/pulse.db"
+  digests_dir: "data/digests"
+  demo_dir: "data/demo"
