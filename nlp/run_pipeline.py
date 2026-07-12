@@ -67,7 +67,9 @@ def detect_spikes(con, z=2.0, trailing=8):
             alerts.append({"app": app, "theme": theme,
                            "latest": int(latest), "baseline": round(hist.mean(), 1),
                            "week": str(g["week"].iloc[-1].date())})
-    pd.DataFrame(alerts).to_sql("agg_spikes", con, if_exists="replace", index=False)
+    # explicit columns so an empty alerts list still creates a valid table
+    pd.DataFrame(alerts, columns=["app", "theme", "latest", "baseline", "week"]
+                 ).to_sql("agg_spikes", con, if_exists="replace", index=False)
     print(f"[spikes] {len(alerts)} alert(s)")
 
 

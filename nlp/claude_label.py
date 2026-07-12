@@ -15,8 +15,8 @@ THEMES = "delivery, quality, pricing, app_ux, refunds, stock, service, packaging
 
 PROMPT = """You label quick-commerce app reviews with themes.
 Allowed themes: {themes}.
-Return ONLY a JSON array of arrays; item i is the list of themes for review i.
-No prose, no markdown fences.
+Return ONLY a JSON array of EXACTLY {n} arrays; item i is the list of themes for review i.
+Every review gets an entry, even if it's just ["other"]. No prose, no markdown fences.
 
 Reviews:
 {reviews}"""
@@ -37,12 +37,14 @@ def label_leftovers(con, max_batches=None):
     if max_batches:
         batches = batches[:max_batches]
     for bi, batch in enumerate(batches):
-        numbered = "\n".join(f"{i+1}. {t[:300]}" for i, (_, t) in enumerate(batch))
+        # collapse whitespace/newlines inside reviews so the numbered list stays unambiguous
+        numbered = "\n".join(f"{i+1}. {' '.join(t[:300].split())}" for i, (_, t) in enumerate(batch))
         try:
             resp = client.messages.create(
                 model=CFG["llm"]["label_model"],
                 max_tokens=1500,
-                messages=[{"role": "user", "content": PROMPT.format(themes=THEMES, reviews=numbered)}],
+                messages=[{"role": "user", "content": PROMPT.format(
+                    themes=THEMES, n=len(batch), reviews=numbered)}],
             )
             raw = "".join(b.text for b in resp.content if b.type == "text")
             raw = raw.strip().removeprefix("```json").removesuffix("```").strip()
