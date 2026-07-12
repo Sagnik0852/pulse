@@ -44,7 +44,8 @@ def label_leftovers(con, max_batches=None):
                 max_tokens=1500,
                 messages=[{"role": "user", "content": PROMPT.format(themes=THEMES, reviews=numbered)}],
             )
-            raw = resp.content[0].text.strip().removeprefix("```json").removesuffix("```").strip()
+            raw = "".join(b.text for b in resp.content if b.type == "text")
+            raw = raw.strip().removeprefix("```json").removesuffix("```").strip()
             parsed = json.loads(raw)
             if len(parsed) != len(batch):
                 print(f"[warn] batch {bi}: length mismatch, skipping")

@@ -38,7 +38,8 @@ def generate(segment_summary_df, force=False):
             messages=[{"role": "user", "content": PROMPT.format(
                 company=CFG["company"]["name"], tagline=CFG["company"]["tagline"],
                 segment=seg, profile=profile)}])
-        raw = resp.content[0].text.strip().removeprefix("```json").removesuffix("```").strip()
+        raw = "".join(b.text for b in resp.content if b.type == "text")
+        raw = raw.strip().removeprefix("```json").removesuffix("```").strip()
         try:
             out[seg] = json.loads(raw)
         except Exception:

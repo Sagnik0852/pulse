@@ -64,7 +64,8 @@ def run():
             data=json.dumps(data, default=str)[:60000],
         )}],
     )
-    text = resp.content[0].text
+    # models may emit thinking blocks before text — take only text blocks
+    text = "".join(b.text for b in resp.content if b.type == "text")
     os.makedirs(CFG["paths"]["digests_dir"], exist_ok=True)
     path = os.path.join(CFG["paths"]["digests_dir"], f"{dt.date.today().isoformat()}.md")
     with open(path, "w") as f:

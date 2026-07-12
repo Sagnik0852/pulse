@@ -46,4 +46,5 @@ def answer(question):
         messages=[{"role": "user", "content":
                    f"THEME STATS:\n{stats}\n\nRELEVANT REVIEWS:\n{context}\n\nQUESTION: {question}"}],
     )
-    return resp.content[0].text
+    # models may emit thinking blocks before text — take only text blocks
+    return "".join(b.text for b in resp.content if b.type == "text")
