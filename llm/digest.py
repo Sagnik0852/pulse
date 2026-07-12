@@ -58,6 +58,7 @@ def run():
     resp = client.messages.create(
         model=CFG["llm"]["digest_model"],
         max_tokens=600,
+        thinking={"type": "disabled"},  # Sonnet 5 thinks by default; it would eat the token budget
         messages=[{"role": "user", "content": PROMPT.format(
             persona=CFG["digest"]["recipient_persona"],
             company=CFG["company"]["name"],

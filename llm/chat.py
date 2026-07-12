@@ -42,6 +42,7 @@ def answer(question):
     resp = client.messages.create(
         model=CFG["llm"]["chat_model"],
         max_tokens=500,
+        thinking={"type": "disabled"},
         system=SYSTEM.format(company=CFG["company"]["name"]),
         messages=[{"role": "user", "content":
                    f"THEME STATS:\n{stats}\n\nRELEVANT REVIEWS:\n{context}\n\nQUESTION: {question}"}],

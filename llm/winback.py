@@ -35,6 +35,7 @@ def generate(segment_summary_df, force=False):
                    f"{round(row['member_share']*100)}% members")
         resp = client.messages.create(
             model=CFG["llm"]["digest_model"], max_tokens=300,
+            thinking={"type": "disabled"},
             messages=[{"role": "user", "content": PROMPT.format(
                 company=CFG["company"]["name"], tagline=CFG["company"]["tagline"],
                 segment=seg, profile=profile)}])
