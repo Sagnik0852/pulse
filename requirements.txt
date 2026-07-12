@@ -6,4 +6,5 @@ scikit-learn
 plotly
 anthropic
 pyyaml
-pyarrow==20.0.0  # 25.x segfaults reading parquet in long-lived Streamlit process
+pyarrow==24.0.0  # 25.0.0 segfaults (parquet read + arrow serialization); 24 verified clean
+fastparquet      # dashboard reads parquet via fastparquet as an extra guard

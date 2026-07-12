@@ -13,9 +13,9 @@ demo_badge()
 
 @st.cache_data
 def load():
-    rfm = pd.read_parquet("data/demo/rfm_segments.parquet")
-    scores = pd.read_parquet("data/demo/churn_scores.parquet")
-    imp = pd.read_parquet("data/demo/churn_importances.parquet")
+    rfm = pd.read_parquet("data/demo/rfm_segments.parquet", engine="fastparquet")
+    scores = pd.read_parquet("data/demo/churn_scores.parquet", engine="fastparquet")
+    imp = pd.read_parquet("data/demo/churn_importances.parquet", engine="fastparquet")
     return rfm, scores, imp
 
 try:

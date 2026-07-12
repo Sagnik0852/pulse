@@ -16,9 +16,9 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
 
 @st.cache_data
 def load():
-    orders = pd.read_parquet("data/demo/orders.parquet")
-    co = pd.read_parquet("data/demo/cooccurrence.parquet")
-    rfm = pd.read_parquet("data/demo/rfm_segments.parquet")
+    orders = pd.read_parquet("data/demo/orders.parquet", engine="fastparquet")
+    co = pd.read_parquet("data/demo/cooccurrence.parquet", engine="fastparquet")
+    rfm = pd.read_parquet("data/demo/rfm_segments.parquet", engine="fastparquet")
     return orders, co, rfm
 
 try:
