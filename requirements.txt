@@ -6,4 +6,4 @@ scikit-learn
 plotly
 anthropic
 pyyaml
-pyarrow
+pyarrow==20.0.0  # 25.x segfaults reading parquet in long-lived Streamlit process
